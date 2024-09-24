@@ -2,10 +2,11 @@ terraform {
   required_providers {
     linode = {
       source = "linode/linode"
+      version = "~> 2.28.0"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
+      version = "~> 4.42.0"
     }
   }
   backend "s3" {
