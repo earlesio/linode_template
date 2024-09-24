@@ -14,7 +14,6 @@ output "instance_ip" {
 }
 
 resource "linode_firewall" "firewall" {
-  count = var.linode_firewall_ports != "" ? 1 : 0
   label = "${var.linode_label}_firewall"
   inbound {
     label    = "inbound-tcp"
@@ -28,11 +27,12 @@ resource "linode_firewall" "firewall" {
   outbound_policy = "ACCEPT"
 }
 
-resource "cloudflare_dns_record" "dns_record" {
+resource "cloudflare_record" "dns_record" { //This will be replaced by "cloudflare_dns_record in 5.0 provider"
   count   = var.linode_label != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
-  name    = linode_label
-  value   = linode_instance.instance.ip_address
+  name    = var.linode_label
+  # value   = linode_instance.instance.ip_address
+  content = linode_instance.instance.ip_address //This will be replaced by "value" in 5.0 provider"
   type    = "A"
   ttl     = 60
 }
