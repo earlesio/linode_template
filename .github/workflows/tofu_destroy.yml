@@ -13,8 +13,8 @@ jobs:
       TF_VAR_b2_application_key: ${{ secrets.B2_APPLICATION_KEY }}
       TF_VAR_b2_tfstate_bucket: ${{ vars.B2_TFSTATE_BUCKET }}
       TF_VAR_b2_tfstate_key: ${{ vars.B2_TFSTATE_KEY }}
-      TF_VAR_linode_token: ${{ secrets.linode_token }}
-      TF_VAR_linode_authorized_users: ${{ vars.linode_authorized_users }}
+      TF_VAR_linode_token: ${{ secrets.LINODE_TOKEN }}
+      TF_VAR_linode_authorized_users: ${{ vars.LINODE_AUTHORIZED_USERS }}
       TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       TF_VAR_cloudflare_zone_id: ${{ vars.CLOUDFLARE_ZONE_ID }}
 
