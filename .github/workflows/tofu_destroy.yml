@@ -1,0 +1,48 @@
+name: 'Tofu Destroy'
+ 
+on:
+  workflow_dispatch:
+ 
+jobs:
+  tofu:
+    name: 'Tofu Destroy'
+    env:
+      TF_VAR_b2_s3_endpoint: ${{ vars.B2_S3_ENDPOINT }}
+      TF_VAR_b2_region: ${{ vars.B2_REGION }}
+      TF_VAR_b2_application_key_id: ${{ vars.B2_APPLICATION_KEY_ID }}
+      TF_VAR_b2_application_key: ${{ secrets.B2_APPLICATION_KEY }}
+      TF_VAR_b2_tfstate_bucket: ${{ vars.B2_TFSTATE_BUCKET }}
+      TF_VAR_b2_tfstate_key: ${{ vars.B2_TFSTATE_KEY }}
+      TF_VAR_linode_token: ${{ secrets.linode_token }}
+      TF_VAR_linode_authorized_users: ${{ vars.linode_authorized_users }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_zone_id: ${{ vars.CLOUDFLARE_ZONE_ID }}
+
+    runs-on: ubuntu-latest
+    # environment: # No Environments available in Private (Free) Repo
+ 
+    defaults:
+      run:
+        working-directory: ./terraform/
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: opentofu/setup-opentofu@v1
+      with:
+        tofu_version: 1.8.2
+        tofu_wrapper: false
+    
+    - name: Tofu fmt
+      id: fmt
+      run: tofu fmt -check
+      continue-on-error: true
+    
+    - name: Tofu Init
+      id: init
+      run: tofu init
+      continue-on-error: false
+  
+    - name: Tofu Destroy
+      id: apply
+      run: tofu destroy -no-color -auto-approve
+      continue-on-error: false
