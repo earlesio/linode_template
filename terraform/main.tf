@@ -14,7 +14,7 @@ output "instance_ip" {
 }
 
 resource "linode_firewall" "firewall" {
-    count   = var.linode_firewall_ports != "" ? 1 : 0
+  count = var.linode_firewall_ports != "" ? 1 : 0
   label = "${var.linode_label}_firewall"
   inbound {
     label    = "inbound-tcp"
