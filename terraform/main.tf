@@ -5,8 +5,7 @@ resource "linode_instance" "instance" {
   region           = var.linode_region
   type             = var.linode_type
   authorized_users = ["${var.linode_authorized_users}"]
-  firewall_id      = var.linode_firewall_id != "" ? var.linode_firewall_id : linode_firewall.firewall[0].id //Reference existing firewall ID
-  # firewall_id = var.linode_id == "" ? linode_firewall.firewall[0].id : null //Create unique firewall ID in Terraform
+  firewall_id      = var.linode_firewall_id != "" ? var.linode_firewall_id : linode_firewall.firewall[0].id
 }
 
 output "instance_ip" {
@@ -28,12 +27,11 @@ resource "linode_firewall" "firewall" {
   outbound_policy = "ACCEPT"
 }
 
-resource "cloudflare_record" "dns_record" { //This will be replaced by "cloudflare_dns_record in 5.0 provider"
+resource "cloudflare_record" "dns_record" {
   count   = var.linode_label != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
   name    = var.linode_label
-  # value   = linode_instance.instance.ip_address
-  content = linode_instance.instance.ip_address //This will be replaced by "value" in 5.0 provider"
+  content = linode_instance.instance.ip_address
   type    = "A"
   ttl     = 60
 }
