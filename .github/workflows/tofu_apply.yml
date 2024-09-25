@@ -6,6 +6,11 @@ on:
   #     - 'terraform/**'
   #   branches: [ "main" ]
   workflow_dispatch:
+
+  # Allows external webhook trigger
+  repository_dispatch:
+    types:
+      - apply
  
 jobs:
   tofu:

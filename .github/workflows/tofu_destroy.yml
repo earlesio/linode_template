@@ -2,6 +2,11 @@ name: 'Tofu Destroy'
  
 on:
   workflow_dispatch:
+
+  # Allows external webhook trigger
+  repository_dispatch:
+    types:
+      - destroy
  
 jobs:
   tofu:
