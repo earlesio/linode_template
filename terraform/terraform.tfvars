@@ -5,4 +5,4 @@ linode_type               = "g6-nanode-1"
 linode_stackscript_id     = "1475261" //docker_base
 linode_firewall_source_ip = ["0.0.0.0/0"]
 linode_firewall_ports     = "22, 80, 443"
-linode_firewall_id        = ""
+linode_firewall_id        = "122865"
