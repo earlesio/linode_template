@@ -17,7 +17,7 @@ terraform {
     secret_key = var.b2_application_key
     bucket     = var.b2_tfstate_bucket
     key        = var.b2_tfstate_key
-    region     = "region" //var.b2_region
+    region     = "region" //This does nothing but is required by s3 backend.
 
     skip_credentials_validation = true
     skip_metadata_api_check     = true

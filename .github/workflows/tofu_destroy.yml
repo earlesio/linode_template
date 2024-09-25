@@ -8,7 +8,6 @@ jobs:
     name: 'Tofu Destroy'
     env:
       TF_VAR_b2_s3_endpoint: ${{ vars.B2_S3_ENDPOINT }}
-      TF_VAR_b2_region: ${{ vars.B2_REGION }}
       TF_VAR_b2_application_key_id: ${{ vars.B2_APPLICATION_KEY_ID }}
       TF_VAR_b2_application_key: ${{ secrets.B2_APPLICATION_KEY }}
       TF_VAR_b2_tfstate_bucket: ${{ vars.B2_TFSTATE_BUCKET }}

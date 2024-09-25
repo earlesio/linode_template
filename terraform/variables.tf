@@ -3,7 +3,6 @@ variable "b2_s3_endpoint" {}
 variable "b2_application_key_id" {}
 variable "b2_application_key" {}
 variable "b2_tfstate_bucket" {}
-# variable "b2_region" {}
 variable "linode_token" {}
 variable "linode_authorized_users" {}
 variable "cloudflare_api_token" {}
