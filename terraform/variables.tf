@@ -19,4 +19,4 @@ variable "linode_type" {}
 variable "linode_stackscript_id" {}
 variable "linode_firewall_source_ip" {} // A list of IPv4 addresses or networks. Must be in IP/mask (CIDR) format.
 variable "linode_firewall_ports" {}     // A string representation of ports and/or port ranges (i.e. "443" or "80-90, 91").
-# variable "linode_firewall_id" {} // Alternatively reference an existing firewall ID
+variable "linode_firewall_id" {} // Alternatively reference an existing firewall ID

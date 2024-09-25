@@ -5,8 +5,8 @@ resource "linode_instance" "instance" {
   region           = var.linode_region
   type             = var.linode_type
   authorized_users = ["${var.linode_authorized_users}"]
-  # firewall_id      = var.linode_firewall_id != "" ? var.linode_firewall_id : null //Reference existing firewall ID
-  firewall_id = var.linode_firewall_ports != "" ? linode_firewall.firewall[0].id : null //Create unique firewall ID in Terraform
+  firewall_id      = var.linode_firewall_id != "" ? var.linode_firewall_id : linode_firewall.firewall[0].id //Reference existing firewall ID
+  # firewall_id = var.linode_id == "" ? linode_firewall.firewall[0].id : null //Create unique firewall ID in Terraform
 }
 
 output "instance_ip" {
@@ -14,7 +14,7 @@ output "instance_ip" {
 }
 
 resource "linode_firewall" "firewall" {
-  count = var.linode_firewall_ports != "" ? 1 : 0
+  count = var.linode_firewall_id == "" ? 1 : 0
   label = "${var.linode_label}_firewall"
   inbound {
     label    = "inbound-tcp"
