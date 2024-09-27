@@ -36,11 +36,12 @@ resource "cloudflare_record" "dns_record" {
   ttl     = 60
 }
 
-resource "ansible_host" "terraform_host" {
-  name   = linode_instance.instance.ip_address
-  groups = [ansible_group.terraform_all]
-}
-
 resource "ansible_group" "terraform_all" {
   name = "terraform_all"
 }
+
+resource "ansible_host" "terraform_host" {
+  name   = linode_instance.instance.ip_address
+  groups = ["ansible_group.terraform_all"]
+}
+
