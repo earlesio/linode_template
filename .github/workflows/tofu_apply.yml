@@ -65,22 +65,27 @@ jobs:
       run: tofu apply -no-color -auto-approve
       continue-on-error: false
 
-    - name: Add SSH key
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: |
-        mkdir -p /home/runner/.ssh
-        echo "${{ secrets.LINODE_PRIVATE_KEY }}" > /home/runner/.ssh/id_rsa
-        chmod 600 /home/runner/.ssh/id_rsa
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
-        ssh-add /home/runner/.ssh/id_rsa
+    - name: Tofu Show
+      id: show
+      run: tofu show
+      continue-on-error: true
 
-    - name: Setup Ansible Terraform plugin
-      working-directory: .
-      run: ansible-galaxy install -r ansible/requirements.yml
+    # - name: Add SSH key
+    #   env:
+    #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    #   run: |
+    #     mkdir -p /home/runner/.ssh
+    #     echo "${{ secrets.LINODE_PRIVATE_KEY }}" > /home/runner/.ssh/id_rsa
+    #     chmod 600 /home/runner/.ssh/id_rsa
+    #     ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+    #     ssh-add /home/runner/.ssh/id_rsa
 
-    - name: Install Rclone with Ansible
-      working-directory: .
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml
+    # - name: Setup Ansible Terraform plugin
+    #   working-directory: .
+    #   run: ansible-galaxy install -r ansible/requirements.yml
+
+    # - name: Install Rclone with Ansible
+    #   working-directory: .
+    #   env:
+    #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    #   run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml
