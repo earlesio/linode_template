@@ -65,11 +65,6 @@ jobs:
       run: tofu apply -no-color -auto-approve
       continue-on-error: false
 
-    # - name: Terraform Show
-    #   id: show
-    #   run: terraform show
-    #   continue-on-error: true
-
     - name: Add SSH key
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -84,9 +79,11 @@ jobs:
       working-directory: .
       run: ansible-galaxy install -r ansible/requirements.yml
 
-    - name: Install Rclone with Ansible
+    - name: Run Ansible Playbook
       working-directory: .
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         ANSIBLE_HOST_KEY_CHECKING: false
-      run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml -u root -e "b2_access_key_id='${{ vars.B2_ACCESS_KEY_ID }}' b2_secret_access_key='${{ secrets.B2_SECRET_ACCESS_KEY }}'"
+      run: ansible-playbook -i ansible/terraform.yml ansible/playbook.yml \
+        -u root \
+        -e "b2_access_key_id='${{ vars.B2_ACCESS_KEY_ID }}' b2_secret_access_key='${{ secrets.B2_SECRET_ACCESS_KEY }}'"
