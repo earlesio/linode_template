@@ -57,7 +57,7 @@ jobs:
     
     - name: Tofu Plan
       id: plan
-      run: tofu plan -concise -no-color -out=plan
+      run: tofu plan -concise -no-color
       continue-on-error: false
   
     - name: Tofu Apply

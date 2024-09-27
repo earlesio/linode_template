@@ -2,3 +2,4 @@ plugin: cloud.terraform.terraform_provider
 project_path: ./terraform
 # Terraform binary (available in the $PATH) or full path to the binary.
 binary_path: terraform
+state_file: ""
