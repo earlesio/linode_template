@@ -79,4 +79,4 @@ jobs:
       working-directory: ./ansible/
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: ansible-playbook -i inventory templates/rclone.yml
+      run: ansible-playbook -i inventory rclone.yml
