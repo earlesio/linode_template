@@ -79,4 +79,4 @@ jobs:
       working-directory: ./ansible/
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: ansible-playbook -i terraform_inventory.yml ansible/rclone.yml
+      run: ansible-playbook -i terraform_inventory.yml rclone.yml
