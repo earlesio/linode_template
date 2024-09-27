@@ -35,3 +35,7 @@ resource "cloudflare_record" "dns_record" {
   type    = "A"
   ttl     = 60
 }
+
+resource "ansible_host" "ansible_host" {
+  name = linode_instance.instance.ip_address
+}

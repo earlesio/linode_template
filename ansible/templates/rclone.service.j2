@@ -1,0 +1,11 @@
+[Unit]
+Description=Rclone Mount Service
+After=network.target
+
+[Service]
+User=root
+ExecStart={{ rclone_binary_path }} mount {{ b2_account_name }}:/ {{ mount_point }} --allow-other --vfs-cache-mode full
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

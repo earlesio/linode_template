@@ -1,0 +1,105 @@
+---
+- name: Install and Configure Rclone
+  # hosts: [your_host_or_group]
+  hosts: all
+  become: no
+  gather_facts: no
+
+  vars:
+    # rclone_version: "v1.68.1"
+    # rclone_binary_path: "/usr/local/bin/rclone"
+    rclone_binary_path: "/usr/bin/rclone"
+    rclone_config_dir: "/root/.config/rclone"
+    b2_account_name: "b2"
+    # b2_bucket_name: "myb2bucket"
+    b2_access_key_id: "{{ lookup('env', 'b2_application_key_id' }}"
+    b2_secret_access_key: "{{ lookup('env', 'b2_application_key' }}"
+    mount_point: "/mnt/b2"
+
+  tasks:
+
+  - name: update and upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400 #One day
+
+  - name: install core packages
+    apt:
+      name:
+        - net-tools
+        - tmux
+      update_cache: yes
+  
+  - name: install Rclone and dependencies
+    apt:
+      name:
+        - fuse
+        - rclone
+      state: present
+      update_cache: yes
+
+  # - name: Install Rclone and dependencies
+  #   apt:
+  #     name: "{{ item }}"
+  #     state: present
+  #     update_cache: yes
+  #   loop:
+  #     - fuse
+  #     - rclone
+
+  # - name: Download Rclone
+  #   get_url:
+  #     url: "https://github.com/rclone/rclone/releases/download/{{ rclone_version }}/rclone-{{ rclone_version }}-linux-amd64.zip"
+  #     dest: "/tmp/rclone.zip"
+  #   register: rclone_download
+
+  # - name: Extract Rclone binary
+  #   ansible.builtin.unarchive:
+  #     remote_src: yes
+  #     src: "/tmp/rclone.zip"
+  #     dest: "/usr/local/bin"
+  #   when: rclone_download.changed
+
+  - name: Ensure destination dir exists
+    file:
+      # path: "{{ dest_path | dirname }}"
+      path: "{{ rclone_config_dir }}"
+      state: directory
+
+  - name: Configure Rclone
+    template:
+      src: templates/rclone.conf.j2
+      dest: "{{ rclone_config_dir }}/rclone.conf"
+      mode: '0600'
+    notify: Restart Rclone service
+
+  - name: Create mount point
+    file:
+      path: "{{ mount_point }}"
+      state: directory
+      mode: '0755'
+
+  - name: Create systemd service file
+    template:
+      src: templates/rclone.service.j2
+      dest: "/etc/systemd/system/rclone.service"
+      mode: '0644'
+    notify: Reload systemd daemon
+
+  - name: Enable and start Rclone service
+    systemd:
+      name: rclone.service
+      state: started
+      enabled: yes
+      daemon_reload: yes
+
+  handlers:
+  - name: Restart Rclone service
+    systemd:
+      name: rclone.service
+      state: restarted
+
+  - name: Reload systemd daemon
+    systemd:
+      daemon_reload: yes
