@@ -12,8 +12,8 @@
     rclone_config_dir: "/root/.config/rclone"
     b2_account_name: "b2"
     # b2_bucket_name: "myb2bucket"
-    b2_access_key_id: "{{ lookup('env', 'TF_VAR_b2_application_key_id' }}"
-    b2_secret_access_key: "{{ lookup('env', 'TF_VAR_b2_application_key' }}"
+    b2_access_key_id: {{ lookup('env', 'TF_VAR_b2_application_key_id' }}
+    b2_secret_access_key: {{ lookup('env', 'TF_VAR_b2_application_key' }}
     mount_point: "/mnt/b2"
 
   tasks:
