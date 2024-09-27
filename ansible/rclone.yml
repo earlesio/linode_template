@@ -1,19 +1,13 @@
 ---
 - name: Install and Configure Rclone
-  # hosts: [your_host_or_group]
-  hosts: all
+  hosts: [terraform_all]
   become: no
   gather_facts: no
 
   vars:
-    # rclone_version: "v1.68.1"
-    # rclone_binary_path: "/usr/local/bin/rclone"
     rclone_binary_path: "/usr/bin/rclone"
     rclone_config_dir: "/root/.config/rclone"
     b2_account_name: "b2"
-    # b2_bucket_name: "myb2bucket"
-    # b2_access_key_id: "{{ lookup('env', 'TF_VAR_b2_application_key_id' }}"
-    # b2_secret_access_key: "{{ lookup('env', 'TF_VAR_b2_application_key' }}"
     mount_point: "/mnt/b2"
 
   tasks:
@@ -22,7 +16,7 @@
     apt:
       upgrade: yes
       update_cache: yes
-      cache_valid_time: 86400 #One day
+      cache_valid_time: 86400
 
   - name: install core packages
     apt:
@@ -38,28 +32,6 @@
         - rclone
       state: present
       update_cache: yes
-
-  # - name: Install Rclone and dependencies
-  #   apt:
-  #     name: "{{ item }}"
-  #     state: present
-  #     update_cache: yes
-  #   loop:
-  #     - fuse
-  #     - rclone
-
-  # - name: Download Rclone
-  #   get_url:
-  #     url: "https://github.com/rclone/rclone/releases/download/{{ rclone_version }}/rclone-{{ rclone_version }}-linux-amd64.zip"
-  #     dest: "/tmp/rclone.zip"
-  #   register: rclone_download
-
-  # - name: Extract Rclone binary
-  #   ansible.builtin.unarchive:
-  #     remote_src: yes
-  #     src: "/tmp/rclone.zip"
-  #     dest: "/usr/local/bin"
-  #   when: rclone_download.changed
 
   - name: Ensure destination dir exists
     file:

@@ -89,4 +89,4 @@ jobs:
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         ANSIBLE_HOST_KEY_CHECKING: false
-      run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml -u root -e "b2_access_key_id='${{ vars.B2_APPLICATION_KEY_ID }}' b2_secret_access_key='${{ secrets.B2_APPLICATION_KEY }}'"
+      run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml -u root -e "b2_access_key_id='${{ vars.B2_ACCESS_KEY_ID }}' b2_secret_access_key='${{ secrets.B2_SECRET_ACCESS_KEY }}'"
