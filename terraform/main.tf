@@ -36,6 +36,22 @@ resource "cloudflare_record" "dns_record" {
   ttl     = 60
 }
 
+################### ANSIBLE ######################
+
+# This resource will destroy (potentially immediately) after null_resource.next
+resource "null_resource" "previous" {}
+
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [linode_instance.instance]
+
+  create_duration = "30s"
+}
+
+# This resource will create (at least) 30 seconds after null_resource.previous
+resource "null_resource" "next" {
+  depends_on = [time_sleep.wait_10_seconds]
+}
+
 resource "ansible_group" "terraform_all" {
   name = "terraform_all"
 }
