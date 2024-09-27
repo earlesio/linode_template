@@ -76,7 +76,7 @@ jobs:
         ssh-add /home/runner/.ssh/id_rsa
 
     - name: Install Rclone with Ansible
-      working-directory: .
+      working-directory: ./ansible/
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: ansible-playbook -i inventory ansible/rclone.yml
+      run: ansible-playbook -i terraform_inventory.yml ansible/rclone.yml
