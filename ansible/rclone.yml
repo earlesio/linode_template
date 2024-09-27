@@ -75,3 +75,6 @@
   - name: Reload systemd daemon
     systemd:
       daemon_reload: yes
+
+  - name: Unconditionally reboot the machine with all defaults
+    ansible.builtin.reboot:
