@@ -49,7 +49,7 @@ resource "time_sleep" "wait_30_seconds" {
 
 # This resource will create (at least) 30 seconds after null_resource.previous
 resource "null_resource" "next" {
-  depends_on = [time_sleep.wait_10_seconds]
+  depends_on = [time_sleep.wait_30_seconds]
 }
 
 resource "ansible_group" "terraform_all" {
