@@ -75,8 +75,12 @@ jobs:
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
         ssh-add /home/runner/.ssh/id_rsa
 
+    - name: Setup Ansible Terraform plugin
+      working-directory: .
+      run: ansible-galaxy install -r ansible/requirements.yml
+
     - name: Install Rclone with Ansible
-      working-directory: ./ansible/
+      working-directory: .
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: ansible-playbook -i terraform_inventory.yml rclone.yml
+      run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml
