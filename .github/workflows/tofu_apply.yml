@@ -88,4 +88,5 @@ jobs:
       working-directory: .
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        ANSIBLE_HOST_KEY_CHECKING: false
       run: ansible-playbook -i ansible/terraform.yml ansible/rclone.yml
