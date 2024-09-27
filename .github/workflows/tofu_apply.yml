@@ -65,9 +65,9 @@ jobs:
       run: tofu apply -no-color -auto-approve
       continue-on-error: false
 
-    - name: Tofu Show
+    - name: Terraform Show
       id: show
-      run: tofu show
+      run: terraform show
       continue-on-error: true
 
     # - name: Add SSH key
